@@ -12,6 +12,8 @@ for source sqlite look at here
 https://github.com/CuriousDrive/EFCore.AllDatabasesConsidered/tree/main/SQLite/Database
 
 
+How to Connect SQLite with .netCore
+```
 Add Connection String =>
 Data source=../Database/youtubenetcore.sqlite
 
@@ -26,3 +28,4 @@ dotnet tool update --global dotnet-ef
 
 Scaffold SQLite Database =>
 dotnet ef dbcontext scaffold Name=YoutubeNetCoreDB Microsoft.EntityFrameworkCore.Sqlite --output-dir Models --context-dir Data --namespace YoutubeNetCoreDB.Models --context-namespace data.Data --context YoutubeNetCoreDBContext -f --no-onconfiguring
+```
