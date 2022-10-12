@@ -1,6 +1,5 @@
 ﻿using NetCore.Repositories;
 using NetCore.Models;
-using NetCore.Repositories;
 
 namespace NetCore.Services
 {
@@ -11,8 +10,8 @@ namespace NetCore.Services
             var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
 
             if (movie is null) return null;
-            
-            return movie?;
+
+            return movie;
         }
 
         public List<Movie> List()
