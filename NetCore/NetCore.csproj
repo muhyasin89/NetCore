@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+=======
+<Project Sdk="Microsoft.NET.Sdk.Web">
+>>>>>>> 4979ece31bb39fb0468cd0f993a40d1017685f6e
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.2" />
     <PackageReference Include="EFCore.ModelBuilderExtensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
@@ -25,6 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IssueApp\IssueApp.csproj" />
+=======
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+>>>>>>> 4979ece31bb39fb0468cd0f993a40d1017685f6e
   </ItemGroup>
 
 </Project>
