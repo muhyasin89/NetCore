@@ -9,6 +9,8 @@
 
         public string Email { get; set; } = string.Empty;
 
+        public Role? Role;
+
         public string PhoneNumber { get; set; } = string.Empty;
         public DateTime DOB { get; set; }
 

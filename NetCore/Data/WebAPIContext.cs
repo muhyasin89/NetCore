@@ -17,5 +17,7 @@ namespace NetCore.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<BlogPost> BlogPost { get; set; }
     }
 }

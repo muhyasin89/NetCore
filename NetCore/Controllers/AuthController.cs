@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection.Metadata.Ecma335;
+
 
 namespace NetCore.Controllers
 {
@@ -79,8 +79,15 @@ namespace NetCore.Controllers
             }
 
             string token = CreateToken(user);
+            TokenReturn tokenReturn = new TokenReturn()
+            {
+                Token = token,
+                RefreshToken = "",
+                ExpiredIn = 0
+            };
 
-            return Ok(token);
+
+            return Ok(tokenReturn);
         }
 
         private string CreateToken(User user)
