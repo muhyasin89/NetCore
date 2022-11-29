@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCore.Data;
 using NetCore.Models;
-using System.Security.Principal;
+using System.Security.Claims;
+
 
 
 namespace NetCore.Controllers
@@ -13,9 +15,13 @@ namespace NetCore.Controllers
     {
         //the create already in Register
         WebAPIContext _context;
-        public BlogPostController(WebAPIContext context)
+        private string userId;
+
+        public BlogPostController(WebAPIContext context, IServiceCollection services, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            services.AddHttpContextAccessor();
+            userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
         [HttpGet]
@@ -47,12 +53,12 @@ namespace NetCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            string userName = WindowsIdentity.GetCurrent().Name;
+            
 
             findBlogPost.Topic = BlogPost.Topic;
             findBlogPost.Description = BlogPost.Description;
             findBlogPost.UpdatedDate = DateTime.Now;
-            findBlogPost.User = await _context.Users.FirstOrDefaultAsync(user =>user.Username == userName);
+            findBlogPost.User = await _context.Users.FindAsync(userId);
 
 
             _context.Entry(findBlogPost).State = EntityState.Modified;
