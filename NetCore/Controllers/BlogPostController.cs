@@ -53,8 +53,6 @@ namespace NetCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            
-
             findBlogPost.Topic = BlogPost.Topic;
             findBlogPost.Description = BlogPost.Description;
             findBlogPost.UpdatedDate = DateTime.Now;

@@ -35,7 +35,9 @@ namespace NetCore.Controllers
         {
             var findUser = await _context.Users.FindAsync(id);
 
-            if (findUser == null) 
+            var findRole = await _context.Roles.FindAsync(user.RoleId);
+
+            if (findUser == null || findRole == null) 
             {
                 return NotFound();
             }
@@ -50,6 +52,7 @@ namespace NetCore.Controllers
             findUser.Username = user.UserName;
             findUser.PhoneNumber = user.PhoneNumber;
             findUser.DOB = user.DOB;
+            findUser.Role = findRole;
 
             _context.Entry(findUser).State = EntityState.Modified;
 
@@ -67,7 +70,10 @@ namespace NetCore.Controllers
             return Ok(findUser);
         }
 
-        [HttpDelete]
+
+       
+
+            [HttpDelete]
         public async Task<ActionResult<User>> Delete(int id, bool? saveChangesError = false) 
         {
             var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);

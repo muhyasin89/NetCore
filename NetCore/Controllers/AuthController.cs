@@ -35,11 +35,14 @@ namespace NetCore.Controllers
                 return BadRequest("Email anda suda terdaftar");
             }
 
+            var findRole = await _webAPIContext.Roles.FirstOrDefaultAsync(p => p.Name == "User");
+
             user.Email = request.Email;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.PhoneNumber = request.PhoneNumber;
             user.DOB = request.DOB;
+            user.Role = findRole;
 
             _webAPIContext.Users.Add(user);
 

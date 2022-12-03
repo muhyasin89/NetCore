@@ -10,6 +10,8 @@
         public string Email { get; set; } = string.Empty;
 
         public string PhoneNumber { get; set; } = string.Empty;
+
+        public int RoleId { get; set; }
         public DateTime DOB { get; set; }
         DateTime CreatedDate { get; set; }
     }

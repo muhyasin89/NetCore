@@ -19,13 +19,13 @@ namespace NetCore.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Role>>> index()
         {
-            return Ok(await _context.Role.ToListAsync());
+            return Ok(await _context.Roles.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetById(int id)
         {
-            var Role = await _context.Role.FindAsync(id);
+            var Role = await _context.Roles.FindAsync(id);
 
             return Ok(Role);
         }
@@ -33,7 +33,7 @@ namespace NetCore.Controllers
         [HttpPut]
         public async Task<ActionResult<Role>> UpdateUser(int id, UserUpdateDTO Role)
         {
-            var findRole = await _context.Role.FindAsync(id);
+            var findRole = await _context.Roles.FindAsync(id);
 
             if (findRole == null)
             {
@@ -68,7 +68,7 @@ namespace NetCore.Controllers
         [HttpDelete]
         public async Task<ActionResult<Role>> Delete(int id, bool? saveChangesError = false)
         {
-            var Role = await _context.Role.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var Role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             if (Role == null)
             {
