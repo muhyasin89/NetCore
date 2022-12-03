@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCore.Data;
 using NetCore.Models;
@@ -7,6 +8,7 @@ namespace NetCore.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [Authorize(Roles = "Admin, Super Admin")]
     public class RoleController : Controller
     {
         //the create already in Register

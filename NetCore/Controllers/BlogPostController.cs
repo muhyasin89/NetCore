@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCore.Data;
@@ -11,6 +12,7 @@ namespace NetCore.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [Authorize]
     public class BlogPostController : Controller
     {
         //the create already in Register

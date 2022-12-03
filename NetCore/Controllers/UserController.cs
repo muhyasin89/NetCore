@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCore.Data;
 using NetCore.Models;
+using System.Security.Claims;
 
 namespace NetCore.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [Authorize(Roles ="Admin, Super Admin")]
     public class UserController : Controller
     {
         //the create already in Register
@@ -26,6 +29,8 @@ namespace NetCore.Controllers
         public async Task<ActionResult<User>> GetById(int id)
         {
             var user = await _context.Users.FindAsync(id);
+
+           
 
             return Ok(user);
         }
@@ -50,10 +55,18 @@ namespace NetCore.Controllers
             findUser.Avatar = user.Avatar;
             findUser.Email = user.Email;
             findUser.Username = user.UserName;
-            findUser.PhoneNumber = user.PhoneNumber;
+            findUser.Name = user.Name;
+            if(user.PhoneNumber != null)
+            {
+                findUser.PhoneNumber = user.PhoneNumber;
+            }
+          
             findUser.DOB = user.DOB;
-            findUser.Role = findRole;
-
+            
+            if (findRole != null)
+            {
+                findUser.Role = findRole;
+            }
             _context.Entry(findUser).State = EntityState.Modified;
 
             try

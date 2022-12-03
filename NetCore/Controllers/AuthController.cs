@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace NetCore.Controllers
 {
@@ -17,11 +17,13 @@ namespace NetCore.Controllers
         public static User user = new User();
         WebAPIContext _webAPIContext;
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, WebAPIContext context) 
+        public AuthController(IConfiguration configuration, WebAPIContext context, IUserService userService) 
         {
             _configuration = configuration;
             _webAPIContext = context;
+            _userService = userService;
         }
 
         [HttpPost("register")]
@@ -93,11 +95,49 @@ namespace NetCore.Controllers
             return Ok(tokenReturn);
         }
 
+        [HttpGet, Authorize]
+        public async Task<ActionResult<GetCurrentUser>> GetMe()
+        {
+            //String userName = User?.Identity?.Name;
+
+            String userName = _userService.GetMyName();
+            User user = await _webAPIContext.Users.FirstOrDefaultAsync(x => x.Name == userName);
+            if(user == null)
+            {
+                throw new Exception("User is null with that name");
+            }
+            String role = "User";
+            if (user.Role != null)
+            {
+                role = user.Role.Name;
+            }
+            
+            
+
+            GetCurrentUser getCurrentUser = new
+            GetCurrentUser
+            ()
+            {
+                UserId = user.Id,
+                UserName = userName,
+                UserRole = role
+            };
+
+            return Ok(getCurrentUser);
+        }
+
         private string CreateToken(User user)
         {
+            string role = "User";
+            if(user.Role != null)
+            {
+                 role = user.Role.Name;
+            }
+           
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Email)
+                new Claim(ClaimTypes.NameIdentifier, user.Email),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
